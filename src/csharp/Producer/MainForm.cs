@@ -4,6 +4,7 @@
     using System.Configuration;
     using System.Linq;
     using System.Windows.Forms;
+    using Helpers;
 
     public partial class MainForm : Form
     {
@@ -22,38 +23,21 @@
             ConfigurationManager
                 .AppSettings["producer.studios.addresses"]
                 .Split(',')
-                .Select(x =>
+                .Select<string, Studio>(x =>
                 {
+                    if (Equals(x, "LOOPBACK"))
+                    {
+                        return new LoopbackStudio();
+                    }
+
                     var p = x.Split('|');
-                    return new Studio(p[0], p[1], s =>
+                    return new SimpleHttpClientStudio(p[0], p[1], s =>
                     {
                         this.textBox.Text = s;
                     });
                 })
                 .Each(x => x.AddMenuItem(this.studioMenu));
         }
-
-        /*
-        private void Item_Click(object sender, EventArgs e)
-        {
-            var selectedMenuItem = (ToolStripMenuItem)sender;
-
-            selectedMenuItem.Checked = true;
-
-            foreach (var ltoolStripMenuItem in from object
-                item in selectedMenuItem.Owner.Items
-                                               let ltoolStripMenuItem = item as ToolStripMenuItem
-                                               where ltoolStripMenuItem != null
-                                               where !item.Equals(selectedMenuItem)
-                                               select ltoolStripMenuItem)
-            {
-                ltoolStripMenuItem.Checked = false;
-            }
-
-            var studio = selectedMenuItem.Tag as Studio;
-            studio.Display(s => { this.textBox.Text = s; });
-        }
-        */
 
         private void fontToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -65,20 +49,13 @@
 
         private void sendButton_Click(object sender, EventArgs e)
         {
-            var checkedStudio = this
-                .studioMenu
+            this.studioMenu
                 .DropDownItems
                 .OfType<ToolStripMenuItem>()
-                .SingleOrDefault(x => x.Checked);
-
-            if (checkedStudio == null)
-                return;
-
-            var studio = checkedStudio.Tag as Studio;
-            if (studio == null)
-                return;
-
-            studio.Send(this.textBox.Text);
+                .Where(x => x.Checked)
+                .Select(x => x.Tag)
+                .OfType<Studio>()
+                .Each(s => s.Send(this.textBox.Text));
         }
     }
 }
