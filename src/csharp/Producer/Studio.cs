@@ -1,31 +1,64 @@
 namespace Producer
 {
+    using System;
     using System.IO;
     using System.Net;
     using System.Windows.Forms;
 
     public class Studio
     {
-        public string Name { get; }
-
+        private readonly string name;
         private readonly string address;
+        private readonly Action<string> setTextAction;
 
-        public Studio(string name, string address)
+        public Studio(string name, string address, Action<string> setTextAction)
         {
-            this.Name = name;
+            Guard.AgainstNullOrEmptyString(name, nameof(name));
+            Guard.AgainstNullOrEmptyString(address, nameof(address));
+
+            this.name = name;
             this.address = address;
+            this.setTextAction = setTextAction;
         }
 
-        public void Display(TextBox textBox)
+        public void AddMenuItem(ToolStripMenuItem parent)
         {
-            using (var webClient = new WebClient())
+            parent.DropDownItems.Add(MakeMenuItem());
+        }
+
+        ToolStripMenuItem MakeMenuItem()
+        {
+            var result = new ToolStripMenuItem
             {
-                webClient.Headers[HttpRequestHeader.ContentType] = "text/plain";
-                using (var resp = webClient.OpenRead(this.address))
+                CheckOnClick = true,
+                Text = this.name,
+                Tag = this
+            };
+            result.Click += MenuItem_Click;
+            return result;
+        }
+
+        private void MenuItem_Click(object sender, EventArgs e)
+        {
+            var menuItem = sender as ToolStripMenuItem;
+            if (menuItem == null)
+                return;
+
+            try
+            {
+                using (var webClient = new WebClient())
                 {
-                    var reader = new StreamReader(resp);
-                    textBox.Text = reader.ReadToEnd();
+                    webClient.Headers[HttpRequestHeader.ContentType] = "text/plain";
+                    using (var resp = webClient.OpenRead(this.address))
+                    {
+                        var reader = new StreamReader(resp);
+                        this.setTextAction(reader.ReadToEnd());
+                    }
                 }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show($@"Cannot connect to {name}.");
             }
         }
 
