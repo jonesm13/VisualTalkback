@@ -1,13 +1,9 @@
-﻿using System;
-using System.Windows.Forms;
-
-namespace Producer
+﻿namespace Producer
 {
+    using System;
     using System.Configuration;
-    using System.IO;
     using System.Linq;
-    using System.Net;
-    using System.Net.Http;
+    using System.Windows.Forms;
 
     public partial class MainForm : Form
     {
@@ -18,7 +14,7 @@ namespace Producer
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -46,46 +42,43 @@ namespace Producer
 
         private void Item_Click(object sender, EventArgs e)
         {
-            var selectedMenuItem = (ToolStripMenuItem)sender;
+            var selectedMenuItem = (ToolStripMenuItem) sender;
 
             selectedMenuItem.Checked = true;
 
-            foreach (var ltoolStripMenuItem in (from object
-                                                    item in selectedMenuItem.Owner.Items
-                                                let ltoolStripMenuItem = item as ToolStripMenuItem
-                                                where ltoolStripMenuItem != null
-                                                where !item.Equals(selectedMenuItem)
-                                                select ltoolStripMenuItem))
-                (ltoolStripMenuItem).Checked = false;
+            foreach (var ltoolStripMenuItem in from object
+                item in selectedMenuItem.Owner.Items
+                let ltoolStripMenuItem = item as ToolStripMenuItem
+                where ltoolStripMenuItem != null
+                where !item.Equals(selectedMenuItem)
+                select ltoolStripMenuItem)
+            {
+                ltoolStripMenuItem.Checked = false;
+            }
 
             var studio = selectedMenuItem.Tag as Studio;
             studio.Display(this.textBox);
         }
-    }
 
-    public class Studio
-    {
-        public string Name { get; }
-
-        private readonly string address;
-
-        public Studio(string name, string address)
+        private void fontToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Name = name;
-            this.address = address;
+            if (this.fontDialog1.ShowDialog() == DialogResult.OK)
+            {
+                this.textBox.Font = this.fontDialog1.Font;
+            }
         }
 
-        public void Display(TextBox textBox)
+        private void sendButton_Click(object sender, EventArgs e)
         {
-            using (var webClient = new WebClient())
-            {
-                webClient.Headers[HttpRequestHeader.ContentType] = "text/plain";
-                using (var resp = webClient.OpenRead(address))
-                {
-                    var reader = new StreamReader(resp);
-                    textBox.Text = reader.ReadToEnd();
-                }
-            }
+            var checkedStudio = this.studioMenu.DropDownItems
+                .OfType<ToolStripMenuItem>()
+                .SingleOrDefault(x=>x.Checked);
+
+            if (checkedStudio == null)
+                return;
+
+            var studio = checkedStudio.Tag as Studio;
+            studio.Send(this.textBox.Text);
         }
     }
 }
