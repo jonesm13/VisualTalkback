@@ -36,7 +36,7 @@
                         this.textBox.Text = s;
                     });
                 })
-                .Each(x => x.AddMenuItem(this.studioMenu));
+                .Each(x => x.AddList(this.destinationCheckBoxList));
         }
 
         private void fontToolStripMenuItem_Click(object sender, EventArgs e)
@@ -49,11 +49,8 @@
 
         private void sendButton_Click(object sender, EventArgs e)
         {
-            this.studioMenu
-                .DropDownItems
-                .OfType<ToolStripMenuItem>()
-                .Where(x => x.Checked)
-                .Select(x => x.Tag)
+            this.destinationCheckBoxList
+                .CheckedItems
                 .OfType<Studio>()
                 .Each(s => s.Send(this.textBox.Text));
         }

@@ -4,7 +4,7 @@ namespace Producer
 
     public abstract class Studio
     {
-        public abstract void AddMenuItem(ToolStripMenuItem parent);
+        public abstract void AddList(CheckedListBox list);
 
         public abstract void Send(string text);
     }

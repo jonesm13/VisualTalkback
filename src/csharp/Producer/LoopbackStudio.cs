@@ -4,20 +4,19 @@ namespace Producer
 
     public sealed class LoopbackStudio : Studio
     {
-        public override void AddMenuItem(ToolStripMenuItem parent)
+        public override void AddList(CheckedListBox list)
         {
-            var menuItem = new ToolStripMenuItem
-            {
-                CheckOnClick = true,
-                Text = "Loopback",
-                Tag = this
-            };
-            parent.DropDownItems.Add(menuItem);
+            list.Items.Add(this);
         }
 
         public override void Send(string text)
         {
             MessageBox.Show($"Text set to '{text}'.");
+        }
+
+        public override string ToString()
+        {
+            return "Loopback";
         }
     }
 }

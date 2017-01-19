@@ -32,13 +32,12 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.studioMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.fontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBox = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.sendButton = new System.Windows.Forms.Button();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
+            this.destinationCheckBoxList = new System.Windows.Forms.CheckedListBox();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -72,23 +71,10 @@
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.studioMenu,
-            this.toolStripSeparator1,
             this.fontToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "&View";
-            // 
-            // studioMenu
-            // 
-            this.studioMenu.Name = "studioMenu";
-            this.studioMenu.Size = new System.Drawing.Size(152, 22);
-            this.studioMenu.Text = "Studio";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // fontToolStripMenuItem
             // 
@@ -111,22 +97,34 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.destinationCheckBoxList);
             this.panel1.Controls.Add(this.sendButton);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 438);
+            this.panel1.Location = new System.Drawing.Point(0, 407);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(548, 35);
+            this.panel1.Size = new System.Drawing.Size(548, 66);
             this.panel1.TabIndex = 2;
             // 
             // sendButton
             // 
-            this.sendButton.Location = new System.Drawing.Point(466, 6);
+            this.sendButton.Location = new System.Drawing.Point(461, 12);
             this.sendButton.Name = "sendButton";
-            this.sendButton.Size = new System.Drawing.Size(75, 23);
+            this.sendButton.Size = new System.Drawing.Size(75, 42);
             this.sendButton.TabIndex = 0;
             this.sendButton.Text = "Send";
             this.sendButton.UseVisualStyleBackColor = true;
             this.sendButton.Click += new System.EventHandler(this.sendButton_Click);
+            // 
+            // destinationCheckBoxList
+            // 
+            this.destinationCheckBoxList.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.destinationCheckBoxList.FormattingEnabled = true;
+            this.destinationCheckBoxList.IntegralHeight = false;
+            this.destinationCheckBoxList.Location = new System.Drawing.Point(12, 12);
+            this.destinationCheckBoxList.MultiColumn = true;
+            this.destinationCheckBoxList.Name = "destinationCheckBoxList";
+            this.destinationCheckBoxList.Size = new System.Drawing.Size(443, 42);
+            this.destinationCheckBoxList.TabIndex = 1;
             // 
             // MainForm
             // 
@@ -154,13 +152,12 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem studioMenu;
         private System.Windows.Forms.ToolStripMenuItem fontToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.TextBox textBox;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button sendButton;
         private System.Windows.Forms.FontDialog fontDialog1;
+        private System.Windows.Forms.CheckedListBox destinationCheckBoxList;
     }
 }
 
