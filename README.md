@@ -42,7 +42,7 @@ The studio client needs to be run with elevated permissions at first use, or any
 
 # Backlog
 
-[ ] As a producer, I want the program to tell me if it can't send the text to one of the studios, so that I know that the studio has got the message.
+[X] As a producer, I want the program to tell me if it can't send the text to one of the studios, so that I know that the studio has got the message.
 
 [ ] Tech story - Make the SimpleHttpClientStudio perform the POST in a thread, so as not to block the main UI thread.
 
