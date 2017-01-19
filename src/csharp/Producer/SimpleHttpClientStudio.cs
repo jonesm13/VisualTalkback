@@ -31,7 +31,7 @@ namespace Producer
 
                 try
                 {
-                    var resp = webClient.UploadString(this.address, text);
+                    webClient.UploadString(this.address, text);
 
                     try
                     {
@@ -42,7 +42,7 @@ namespace Producer
                         // nop - eat any errors with the callback
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     onFailure?.Invoke();
                 }

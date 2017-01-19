@@ -61,8 +61,11 @@
                     }));
         }
 
-        void InvokeImpl(Action method)
+        private void InvokeImpl(Action method)
         {
+            if (method == null)
+                return;
+
             if (this.InvokeRequired)
                 this.Invoke(method);
             else
