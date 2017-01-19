@@ -11,6 +11,7 @@ namespace Producer
             Action onFail = null)
         {
             MessageBox.Show($"Text set to '{text}'.");
+            onSuccess?.Invoke();
         }
 
         public override string ToString()

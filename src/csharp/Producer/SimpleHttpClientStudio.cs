@@ -2,6 +2,7 @@ namespace Producer
 {
     using System;
     using System.Net;
+    using System.Threading.Tasks;
     using Helpers;
 
     public class SimpleHttpClientStudio : Studio
@@ -25,28 +26,32 @@ namespace Producer
         {
             Guard.AgainstNullOrEmptyString(text, nameof(text));
 
-            using (var webClient = new WebClient())
+            Task.Run(() =>
             {
-                webClient.Headers[HttpRequestHeader.ContentType] = "text/plain";
-
-                try
+                using (var webClient = new WebClient())
                 {
-                    webClient.UploadString(this.address, text);
+                    webClient.Headers[HttpRequestHeader.ContentType] =
+                        "text/plain";
 
                     try
                     {
-                        onSuccess?.Invoke();
+                        webClient.UploadString(this.address, text);
+
+                        try
+                        {
+                            onSuccess?.Invoke();
+                        }
+                        catch (Exception)
+                        {
+                            // nop - eat any errors with the callback
+                        }
                     }
                     catch (Exception)
                     {
-                        // nop - eat any errors with the callback
+                        onFailure?.Invoke();
                     }
                 }
-                catch (Exception)
-                {
-                    onFailure?.Invoke();
-                }
-            }
+            });
         }
 
         public override string ToString()
