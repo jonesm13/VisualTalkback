@@ -35,3 +35,8 @@ To test the Producer application, add a LOOPBACK into the above key. This will a
 
 The studio client needs to be run with elevated permissions at first use, or any time the endpoint is changed. This is because the url needs to be added to Windows ACL to give Nancy permissions to listen on a given URL.
 
+# Backlog
+
+[ ] As a producer, I want the program to tell me if it can't send the text to one of the studios, so that I know that the studio has got the message.
+
+[ ] Tech story - Make the SimpleHttpClientStudio perform the POST in a thread, so as not to block the main UI thread.
