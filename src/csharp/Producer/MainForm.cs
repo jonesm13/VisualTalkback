@@ -49,7 +49,24 @@
             this.destinationCheckBoxList
                 .CheckedItems
                 .OfType<Studio>()
-                .Each(s => s.Send(this.textBox.Text));
+                .Each(s => s.Send(
+                    this.textBox.Text, 
+                    onSuccess: null, 
+                    onFail: () =>
+                    {
+                        InvokeImpl(() =>
+                        {
+                            MessageBox.Show($"Could not send message to {s}.");
+                        });      
+                    }));
+        }
+
+        void InvokeImpl(Action method)
+        {
+            if (this.InvokeRequired)
+                this.Invoke(method);
+            else
+                method();
         }
     }
 }

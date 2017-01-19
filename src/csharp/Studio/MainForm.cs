@@ -14,14 +14,7 @@
 
         public void SetText(string text)
         {
-            if (InvokeRequired)
-            {
-                Invoke((Action) delegate { SetTextImpl(text); });
-            }
-            else
-            {
-                SetTextImpl(text);
-            }
+            this.InvokeImpl(() => SetTextImpl(text));
         }
 
         void SetTextImpl(string text)
@@ -30,15 +23,10 @@
                 text.IndexOf("\r\n", StringComparison.InvariantCulture) == -1)
             {
                 text = text.Replace("\n", "\r\n");
-                
+
             }
             this.talkbackText.Text = text;
             this.talkbackText.SelectionLength = 0;
-        }
-
-        public string GetText()
-        {
-            return this.talkbackText.Text;
         }
 
         #endregion
@@ -54,6 +42,14 @@
             {
                 this.talkbackText.Font = this.fontDialog1.Font;
             }
+        }
+
+        void InvokeImpl(Action method)
+        {
+            if (this.InvokeRequired)
+                this.Invoke(method);
+            else
+                method();
         }
     }
 }

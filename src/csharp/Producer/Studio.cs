@@ -1,5 +1,6 @@
 namespace Producer
 {
+    using System;
     using System.Windows.Forms;
 
     public abstract class Studio
@@ -9,6 +10,9 @@ namespace Producer
             list.Items.Add(this);
         }
 
-        public abstract void Send(string text);
+        public abstract void Send(
+            string text, 
+            Action onSuccess = null, 
+            Action onFail = null);
     }
 }

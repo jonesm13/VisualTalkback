@@ -2,7 +2,6 @@ namespace Producer
 {
     using System;
     using System.Net;
-    using System.Windows.Forms;
     using Helpers;
 
     public class SimpleHttpClientStudio : Studio
@@ -19,7 +18,10 @@ namespace Producer
             this.address = address;
         }
 
-        public override void Send(string text)
+        public override void Send(
+            string text,
+            Action onSuccess = null,
+            Action onFailure = null)
         {
             Guard.AgainstNullOrEmptyString(text, nameof(text));
 
@@ -30,11 +32,19 @@ namespace Producer
                 try
                 {
                     var resp = webClient.UploadString(this.address, text);
+
+                    try
+                    {
+                        onSuccess?.Invoke();
+                    }
+                    catch (Exception)
+                    {
+                        // nop - eat any errors with the callback
+                    }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(
-                        $"Could not send to {name}, error={ex.Message}");
+                    onFailure?.Invoke();
                 }
             }
         }
