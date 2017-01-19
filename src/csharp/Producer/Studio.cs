@@ -4,7 +4,10 @@ namespace Producer
 
     public abstract class Studio
     {
-        public abstract void AddList(CheckedListBox list);
+        public virtual void AddList(CheckedListBox list)
+        {
+            list.Items.Add(this);
+        }
 
         public abstract void Send(string text);
     }

@@ -21,11 +21,6 @@ namespace Producer
             this.setTextAction = setTextAction;
         }
 
-        public override void AddList(CheckedListBox list)
-        {
-            list.Items.Add(this);
-        }
-
         public override void Send(string text)
         {
             using (var webClient = new WebClient())
