@@ -7,6 +7,9 @@ The project consists of two projects; a studio  application and a producer appli
 
 The two applications communicate via simple HTTP POST requests; the producer sets text on the studio client by POSTing a blob of plain text in the body of the request.
 
+![Producer client](/wiki/producer.png)
+![Studio client](/wiki/studio.png)
+
 # Configuration
 ## Studio
 
