@@ -3,7 +3,9 @@ A visual talkback system for radio stations.
 
 # Overview
 
-The project consists of two projects; a studio  application and a producer application. As suggested, the studio application runs on the studio machine; the producer application on a machine in a production area.
+This project is a way to provide visual talkback between a producer and a presenter/operator in one or many studios, typically for the purposes of providing information about phone-ins, sports scores and so on.
+
+The project consists of two applications; a studio application and a producer application. As suggested, the studio application runs on the studio machine; the producer application on a machine in a production area.
 
 The two applications communicate via simple HTTP POST requests; the producer sets text on the studio client by POSTing a blob of plain text in the body of the request.
 
@@ -43,3 +45,7 @@ The studio client needs to be run with elevated permissions at first use, or any
 [ ] As a producer, I want the program to tell me if it can't send the text to one of the studios, so that I know that the studio has got the message.
 
 [ ] Tech story - Make the SimpleHttpClientStudio perform the POST in a thread, so as not to block the main UI thread.
+
+[ ] As a presenter, I want to be able to type messages back to the producer.
+
+[ ] As a producer, I want the presenter to see the changes I make as I type them, rather than having to press the Send button.
