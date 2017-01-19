@@ -9,24 +9,33 @@ namespace Producer
     {
         private readonly string name;
         private readonly string address;
-        private readonly Action<string> setTextAction;
 
-        public SimpleHttpClientStudio(string name, string address, Action<string> setTextAction)
+        public SimpleHttpClientStudio(string name, string address)
         {
             Guard.AgainstNullOrEmptyString(name, nameof(name));
             Guard.AgainstNullOrEmptyString(address, nameof(address));
 
             this.name = name;
             this.address = address;
-            this.setTextAction = setTextAction;
         }
 
         public override void Send(string text)
         {
+            Guard.AgainstNullOrEmptyString(text, nameof(text));
+
             using (var webClient = new WebClient())
             {
                 webClient.Headers[HttpRequestHeader.ContentType] = "text/plain";
-                var resp = webClient.UploadString(this.address, text);
+
+                try
+                {
+                    var resp = webClient.UploadString(this.address, text);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(
+                        $"Could not send to {name}, error={ex.Message}");
+                }
             }
         }
 

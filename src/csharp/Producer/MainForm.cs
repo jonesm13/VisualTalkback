@@ -31,10 +31,7 @@
                     }
 
                     var p = x.Split('|');
-                    return new SimpleHttpClientStudio(p[0], p[1], s =>
-                    {
-                        this.textBox.Text = s;
-                    });
+                    return new SimpleHttpClientStudio(p[0], p[1]);
                 })
                 .Each(x => x.AddList(this.destinationCheckBoxList));
         }
