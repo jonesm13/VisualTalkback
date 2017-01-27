@@ -3,7 +3,7 @@ A visual talkback system for radio stations.
 
 # Build status
 
-[![Build status](https://ci.appveyor.com/api/projects/status/bk73lfoxbetb97p1/branch/master?svg=true)](https://ci.appveyor.com/project/jonesm13/visualtalkback/branch/master)
+Master [![Build status](https://ci.appveyor.com/api/projects/status/bk73lfoxbetb97p1/branch/master?svg=true)](https://ci.appveyor.com/project/jonesm13/visualtalkback/branch/master)
 
 # Overview
 
