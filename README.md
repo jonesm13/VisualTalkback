@@ -1,6 +1,10 @@
 # VisualTalkback
 A visual talkback system for radio stations.
 
+# Build status
+
+[![Build status](https://ci.appveyor.com/api/projects/status/bk73lfoxbetb97p1/branch/master?svg=true)](https://ci.appveyor.com/project/jonesm13/visualtalkback/branch/master)
+
 # Overview
 
 This project is a way to provide visual talkback between a producer and a presenter/operator in one or many studios, typically for the purposes of providing information about phone-ins, sports scores and so on.
