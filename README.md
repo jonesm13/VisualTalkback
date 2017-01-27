@@ -3,7 +3,8 @@ A visual talkback system for radio stations.
 
 # Build status
 
-Master [![Build status](https://ci.appveyor.com/api/projects/status/bk73lfoxbetb97p1/branch/master?svg=true)](https://ci.appveyor.com/project/jonesm13/visualtalkback/branch/master)
+Master
+[![Build status](https://ci.appveyor.com/api/projects/status/bk73lfoxbetb97p1/branch/master?svg=true)](https://ci.appveyor.com/project/jonesm13/visualtalkback/branch/master)
 
 # Overview
 
@@ -48,7 +49,7 @@ The studio client needs to be run with elevated permissions at first use, or any
 
 [X] As a producer, I want the program to tell me if it can't send the text to one of the studios, so that I know that the studio has got the message.
 
-[ ] Tech story - Make the SimpleHttpClientStudio perform the POST in a thread, so as not to block the main UI thread.
+[X] Tech story - Make the SimpleHttpClientStudio perform the POST in a thread, so as not to block the main UI thread.
 
 [ ] As a presenter, I want to be able to type messages back to the producer.
 
