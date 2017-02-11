@@ -1,6 +1,7 @@
 ﻿namespace Studio
 {
     using System;
+    using System.Runtime.InteropServices;
     using System.Windows.Forms;
 
     public partial class MainForm : Form, ITalkbackService
@@ -10,46 +11,53 @@
             InitializeComponent();
         }
 
-        #region ITalkbackService members
-
-        public void SetText(string text)
-        {
-            this.InvokeImpl(() => SetTextImpl(text));
-        }
-
-        void SetTextImpl(string text)
-        {
-            if (text.IndexOf("\n", StringComparison.InvariantCulture) != -1 &
-                text.IndexOf("\r\n", StringComparison.InvariantCulture) == -1)
-            {
-                text = text.Replace("\n", "\r\n");
-
-            }
-            this.talkbackText.Text = text;
-            this.talkbackText.SelectionLength = 0;
-        }
-
-        #endregion
+        [DllImport("user32.dll")]
+        private static extern bool FlashWindow(IntPtr hwnd, bool bInvert);
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void fontToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.fontDialog1.ShowDialog() == DialogResult.OK)
+            if (fontDialog1.ShowDialog() == DialogResult.OK)
+                talkbackText.Font = fontDialog1.Font;
+        }
+
+        private void InvokeImpl(Action method)
+        {
+            if (InvokeRequired)
             {
-                this.talkbackText.Font = this.fontDialog1.Font;
+                Invoke((MethodInvoker) delegate
+                {
+                    method();
+                    FlashWindow(Handle, false);
+                });
+            }
+            else
+            {
+                method();
+                FlashWindow(Handle, false);
             }
         }
 
-        void InvokeImpl(Action method)
+        #region ITalkbackService members
+
+        public void SetText(string text)
         {
-            if (this.InvokeRequired)
-                this.Invoke(method);
-            else
-                method();
+            InvokeImpl(() => SetTextImpl(text));
         }
+
+        private void SetTextImpl(string text)
+        {
+            if ((text.IndexOf("\n", StringComparison.InvariantCulture) != -1) &
+                (text.IndexOf("\r\n", StringComparison.InvariantCulture) == -1))
+                text = text.Replace("\n", "\r\n");
+            talkbackText.Text = text;
+            talkbackText.SelectionLength = 0;
+        }
+
+        #endregion
     }
 }
